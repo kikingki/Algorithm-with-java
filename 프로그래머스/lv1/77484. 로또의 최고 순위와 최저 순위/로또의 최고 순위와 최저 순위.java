@@ -19,10 +19,12 @@ class Solution {
         Arrays.sort(win_nums);
         
         for(int lotto_num : lottos) {
+            // 최고 등수는 0이 모두 로또 번호인 경우
             if(lotto_num == 0) {
                 cnt[0]++;
                 continue;
             }
+            // lottos의 원소마다 win_nums를 비교, win_nums가 lottos의 원소보다 값이 커지면 break
             for(int win_num : win_nums) {
                 if(lotto_num == win_num) {
                     cnt[1]++;
@@ -39,8 +41,3 @@ class Solution {
         return answer;
     }
 }
-// 당첨 가능했던 최고 순위, 최저 순위 - 알아볼수없음 0 
-// 최고 순위와 최저 순위를 담은 배열 리턴
-// 둘 다 정렬하고, lottos의 원소 당 win_nums를 비교, win_nums가 lottos의 원소보다 값이 커지면 break
-// 같은 값이 있으면 answer[0]++
-// 그리고 0의 개수 만큼 answer[1]++
