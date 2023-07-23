@@ -36,11 +36,10 @@ public class Main {
         // 좌표가 들어가야하므로 int 배열형 queue
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[] {i,j});
-        visited[i][j] = true;
     
         while(!queue.isEmpty()) {
             int[] now = queue.poll();   // 현재 노드
-            visited[i][j] = true;
+            visited[i][j] = true;       // 현재 노드 방문 기록
             
             for(int k=0; k<4; k++) {    // 상하좌우 탐색
                 int x = now[0] + dx[k];
@@ -48,7 +47,7 @@ public class Main {
                 if(x>=0 && y>=0 && x<N && y<M) {  // 유효한 좌표(0보다 크고, 배열의 범위를 넘어가지 않음)
                     if(arr[x][y] != 0 && !visited[x][y]) {    // 이동 가능(1)하면서 방문하지 않은 노드
                         // {x,y} 좌표는 방문이 가능하다
-                        visited[x][y] = true;
+                        visited[x][y] = true;       // 방문을 기록하여 queue에 여러 번 추가하는 것을 방지
                         arr[x][y] = arr[now[0]][now[1]] + 1;    // 현재 노드의 depth + 1
                         queue.offer(new int[] {x,y}); 
                     }
