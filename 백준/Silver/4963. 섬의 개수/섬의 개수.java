@@ -54,10 +54,10 @@ public class Main {
         }
     }
 
-    private static void bfs(int x, int y) {
+    private static void bfs(int y, int x) {
         Queue<int[]> queue = new LinkedList<>();
-        visited[x][y] = true;
-        queue.add(new int[]{x, y});
+        visited[y][x] = true;
+        queue.add(new int[]{y, x});
 
         while(!queue.isEmpty()) {
             int[] current = queue.poll();
