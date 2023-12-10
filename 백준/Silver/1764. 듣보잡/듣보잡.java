@@ -10,33 +10,32 @@ public class Main {
 
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
-        int cnt = 0;        // 듣보잡의 수
+        int cnt = 0;
 
-        Map<String, Integer> map = new HashMap<>();
+        HashSet<String> set = new HashSet<>();
+        List<String> list = new ArrayList<>();
 
         for(int i=0; i<N; i++) {
-            map.put(br.readLine(), 1);
+            set.add(br.readLine());
         }
 
         for(int i=N; i<N+M; i++) {
             String name = br.readLine();
 
-            if(map.containsKey(name)) {
-                map.put(name, map.get(name)+1);
+            if(set.contains(name)) {     // 듣보잡이면 리스트에 추가
                 cnt++;
-            } else {
-                map.put(name, 1);
+                list.add(name);
             }
         }
 
-        // 키 값으로 오름차순 정렬
-        List<String> keySet = new ArrayList<>(map.keySet());
-        Collections.sort(keySet);
+        Collections.sort(list);     // 오름차순 정렬
 
+        // StringBuilder로 출력 시간 단축
         System.out.println(cnt);
-
-        for(String key : keySet) {
-            if(map.get(key) > 1) System.out.println(key);
+        StringBuilder sb = new StringBuilder();
+        for(String name : list) {
+            sb.append(name).append("\n");
         }
+        System.out.println(sb);
     }
 }
