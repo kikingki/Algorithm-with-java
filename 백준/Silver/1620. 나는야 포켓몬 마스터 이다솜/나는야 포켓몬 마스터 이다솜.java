@@ -22,13 +22,12 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         for(int i=0; i<M; i++) {
             String question = br.readLine();
-            if(isNumberic(question)) sb.append(map1.get(Integer.parseInt(question))).append("\n");
+            // 모든 문자를 확인할 필요없이, 첫 글자만 숫자인지 판별하면 됨
+            if(question.charAt(0) <= '9') {
+                sb.append(map1.get(Integer.parseInt(question))).append("\n");
+            }
             else sb.append(map2.get(question)).append("\n");
         }
         System.out.println(sb);
-    }
-
-    public static boolean isNumberic(String str) {
-        return str.chars().allMatch(Character::isDigit);
     }
 }
