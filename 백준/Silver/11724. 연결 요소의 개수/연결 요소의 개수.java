@@ -1,61 +1,70 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Queue;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int N;
-    static boolean[] visited;
-    static ArrayList<Integer>[] graph;
-    
+    static int[] parents;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        N = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        visited = new boolean[N+1];
-        graph = new ArrayList[N+1];
+        parents = new int[N+1];
         for(int i=1; i<=N; i++) {
-            graph[i] = new ArrayList<>();
+            parents[i] = i;
         }
 
         for(int i=0; i<M; i++) {
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
-            graph[u].add(v);
-            graph[v].add(u);
+            if(find(u) != find(v)) union(u,v);
         }
 
-        int cnt = 0;
         for(int i=1; i<=N; i++) {
-            if(!visited[i]) {
-                bfs(i);
-                cnt++;
+            find(i);
+        }
+
+        // 그룹 방문 여부
+        boolean[] check = new boolean[N+1];
+        int ans = 0;
+
+        for(int i=1; i<=N; i++) {
+            int group = parents[i];
+            if(!check[group]) {
+                ans++;
+                check[group] = true;
             }
         }
-        System.out.println(cnt);
+
+        System.out.println(ans);
     }
 
-    static void bfs(int start) {
-        Queue<Integer> q = new ArrayDeque<>();
-        q.add(start);
-        visited[start] = true;
+    public static int find(int a) {
+        if(a == parents[a]){
+            return a;
+        }
 
-        while (!q.isEmpty()) {
-            int current = q.poll();
-            for(int i=0; i<graph[current].size(); i++) {
-                int next = graph[current].get(i);
-                if(!visited[next]) {
-                    visited[next] = true;
-                    q.add(next);
-                }
-            }
+        return parents[a] = find(parents[a]);
+    }
+
+    static void union(int a, int b){
+        int pa = find(a);
+        int pb = find(b);
+
+        if(pa == pb){
+            return;
+        }
+
+        if(pa <= pb) {
+            parents[pb] = pa;
+        }else {
+            parents[pa] = pb;
         }
     }
 }
